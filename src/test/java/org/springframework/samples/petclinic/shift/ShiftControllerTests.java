@@ -26,6 +26,7 @@ import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @WebMvcTest(ShiftController.class)
 class ShiftControllerTests {
@@ -33,10 +34,10 @@ class ShiftControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@MockBean
+	@MockitoBean
 	private ShiftRepository shifts;
 
-	@MockBean
+	@MockitoBean
 	private VetRepository vets;
 
 	private Shift testShift;
