@@ -20,9 +20,11 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.shift.ShiftRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,8 +39,11 @@ class VetController {
 
 	private final VetRepository vetRepository;
 
-	public VetController(VetRepository vetRepository) {
-		this.vetRepository = vetRepository;
+	private final ShiftRepository shiftRepository;
+
+	public VetController(VetRepository clinicService, ShiftRepository shiftRepository) {
+		this.vetRepository = clinicService;
+		this.shiftRepository = shiftRepository;
 	}
 
 	@GetMapping("/vets.html")
@@ -52,11 +57,10 @@ class VetController {
 	}
 
 	private String addPaginationModel(int page, Page<Vet> paginated, Model model) {
-		List<Vet> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", paginated.getTotalPages());
 		model.addAttribute("totalItems", paginated.getTotalElements());
-		model.addAttribute("listVets", listVets);
+		model.addAttribute("listVets", paginated.toList());
 		return "vets/vetList";
 	}
 
@@ -73,6 +77,24 @@ class VetController {
 		Vets vets = new Vets();
 		vets.getVetList().addAll(this.vetRepository.findAll());
 		return vets;
+	}
+
+	@GetMapping("/vets/{vetId}")
+	public String showVet(@PathVariable("vetId") int vetId, @RequestParam(defaultValue = "1") int page, Model model) {
+		Vet vet = this.vetRepository.findById(vetId)
+			.orElseThrow(() -> new IllegalArgumentException("Invalid vet Id:" + vetId));
+		model.addAttribute("vet", vet);
+
+		// Add shifts with pagination
+		Pageable pageable = PageRequest.of(page - 1, 10);
+		Page<?> shiftPage = this.shiftRepository.findByVetOrderByDateAscStartTimeAsc(vet, pageable);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", shiftPage.getTotalPages());
+		model.addAttribute("totalItems", shiftPage.getTotalElements());
+		model.addAttribute("shifts", shiftPage.getContent());
+
+		return "vets/vetDetails";
 	}
 
 }

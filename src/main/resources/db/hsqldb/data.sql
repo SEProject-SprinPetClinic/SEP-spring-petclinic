@@ -51,3 +51,14 @@ INSERT INTO visits VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits VALUES (4, 7, '2013-01-04', 'spayed');
+
+-- Sample shifts for vets
+INSERT INTO shifts VALUES (1, 1, '2024-03-18', '09:00', '17:00');
+INSERT INTO shifts VALUES (2, 2, '2024-03-18', '10:00', '18:00');
+INSERT INTO shifts VALUES (3, 3, '2024-03-18', '08:00', '16:00');
+INSERT INTO shifts VALUES (4, 4, '2024-03-19', '09:00', '17:00');
+INSERT INTO shifts VALUES (5, 5, '2024-03-19', '10:00', '18:00');
+INSERT INTO shifts VALUES (6, 6, '2024-03-19', '08:00', '16:00');
+INSERT INTO shifts VALUES (7, 1, '2024-03-20', '10:00', '18:00');
+INSERT INTO shifts VALUES (8, 2, '2024-03-20', '08:00', '16:00');
+INSERT INTO shifts VALUES (9, 3, '2024-03-20', '09:00', '17:00');

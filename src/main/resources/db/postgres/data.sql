@@ -51,3 +51,23 @@ INSERT INTO visits (pet_id, visit_date, description) SELECT 7, '2010-03-04', 'ra
 INSERT INTO visits (pet_id, visit_date, description) SELECT 8, '2011-03-04', 'rabies shot' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=2);
 INSERT INTO visits (pet_id, visit_date, description) SELECT 8, '2009-06-04', 'neutered' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=3);
 INSERT INTO visits (pet_id, visit_date, description) SELECT 7, '2008-09-04', 'spayed' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=4);
+
+-- Sample shifts for vets
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 1, '2024-03-18', '09:00', '17:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=1);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 2, '2024-03-18', '10:00', '18:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=2);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 3, '2024-03-18', '08:00', '16:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=3);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 4, '2024-03-19', '09:00', '17:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=4);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 5, '2024-03-19', '10:00', '18:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=5);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 6, '2024-03-19', '08:00', '16:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=6);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 1, '2024-03-20', '10:00', '18:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=7);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 2, '2024-03-20', '08:00', '16:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=8);
+INSERT INTO shifts (vet_id, shift_date, start_time, end_time) 
+SELECT 3, '2024-03-20', '09:00', '17:00' WHERE NOT EXISTS (SELECT * FROM shifts WHERE id=9);

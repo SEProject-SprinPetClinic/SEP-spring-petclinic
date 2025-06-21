@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'shifts')}">
+
+<body>
+  <h2>Veterinarian Shifts</h2>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form th:action="@{/shifts}" method="get" class="form-inline mb-3">
+        <div class="form-group mr-2">
+          <label for="vetId" class="mr-2">Veterinarian:</label>
+          <select class="form-control" id="vetId" name="vetId">
+            <option value="">All Veterinarians</option>
+            <option th:each="vet : ${vets}" th:value="${vet.id}" th:text="${vet.firstName + ' ' + vet.lastName}"
+              th:selected="${vet.id == selectedVetId}"></option>
+          </select>
+        </div>
+        <div class="form-group mr-2">
+          <label for="startDate" class="mr-2">From:</label>
+          <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+        </div>
+        <div class="form-group mr-2">
+          <label for="endDate" class="mr-2">To:</label>
+          <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <a class="btn btn-primary" th:href="@{/shifts/new}">Add New Shift</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Veterinarian</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="shift : ${shifts}">
+              <td th:text="${#temporals.format(shift.date, 'MMM dd, yyyy')}"></td>
+              <td th:text="${shift.vet.firstName + ' ' + shift.vet.lastName}"></td>
+              <td th:text="${#temporals.format(shift.startTime, 'HH:mm')}"></td>
+              <td th:text="${#temporals.format(shift.endTime, 'HH:mm')}"></td>
+              <td class="text-center">
+                <a th:href="@{/shifts/{id}/edit(id=${shift.id})}" class="btn btn-sm btn-primary mr-2">
+                  <span class="fas fa-edit"></span> Edit
+                </a>
+                <a th:href="@{/shifts/{id}/delete(id=${shift.id})}" class="btn btn-sm btn-danger"
+                  onclick="return confirm('Are you sure you want to delete this shift?')">
+                  <span class="fas fa-trash"></span> Delete
+                </a>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(shifts)}">
+              <td colspan="5" class="text-center">No shifts found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+    // Set min date for endDate based on startDate
+    document.getElementById('startDate').addEventListener('change', function() {
+      document.getElementById('endDate').min = this.value;
+    });
+
+    // Set max date for startDate based on endDate
+    document.getElementById('endDate').addEventListener('change', function() {
+      document.getElementById('startDate').max = this.value;
+    });
+  </script>
+</body>
+
+</html> 
