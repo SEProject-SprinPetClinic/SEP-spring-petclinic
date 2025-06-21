@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Pet Appointments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Pet Appointments</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Veterinarian</th>
+                <th>Date & Time</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.vet.firstName + ' ' + appointment.vet.lastName}"></td>
+                <td th:text="${#temporals.format(appointment.dateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${appointment.type}"></td>
+                <td th:text="${appointment.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/appointments}">Back to All Appointments</a>
+</div>
+</body>
+</html> 
