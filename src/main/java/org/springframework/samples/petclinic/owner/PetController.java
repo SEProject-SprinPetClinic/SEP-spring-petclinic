@@ -111,7 +111,7 @@ class PetController {
 		if (result.hasErrors()) {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
-
+		pet.setOwner(owner);
 		owner.addPet(pet);
 		this.owners.save(owner);
 		redirectAttributes.addFlashAttribute("message", "New Pet has been Added");
@@ -157,17 +157,19 @@ class PetController {
 	 * @param pet The pet with updated details
 	 */
 	private void updatePetDetails(Owner owner, Pet pet) {
-		Pet existingPet = owner.getPet(pet.getId());
-		if (existingPet != null) {
-			// Update existing pet's properties
-			existingPet.setName(pet.getName());
-			existingPet.setBirthDate(pet.getBirthDate());
-			existingPet.setType(pet.getType());
-		}
-		else {
-			owner.addPet(pet);
-		}
-		this.owners.save(owner);
-	}
+    Pet existingPet = owner.getPet(pet.getId());
+    if (existingPet != null) {
+        // Update existing pet's properties
+        existingPet.setName(pet.getName());
+        existingPet.setBirthDate(pet.getBirthDate());
+        existingPet.setType(pet.getType());
+        existingPet.setNotes(pet.getNotes()); // ✅ Yeni eklenen satır
+    }
+    else {
+        owner.addPet(pet);
+    }
+    this.owners.save(owner);
+}
+
 
 }

@@ -1,3 +1,4 @@
+
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 
@@ -8,6 +9,7 @@
     Pet
   </h2>
   <form th:object="${pet}" class="form-horizontal" method="post">
+
     <input type="hidden" name="id" th:value="*{id}" />
     <div class="form-group has-feedback">
       <div class="form-group">
@@ -18,10 +20,27 @@
       </div>
       <input
         th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
-      <input
-        th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'date')}" />
+     
+      <div class="form-group">
+        <label for="birthDate" class="col-sm-2 control-label">Birth Date</label>
+        <div class="col-sm-10">
+          <input type="date" th:field="*{birthDate}" class="form-control" />
+        </div>
+      </div>
+
+
       <input
         th:replace="~{fragments/selectField :: select ('Type', 'type', ${types})}" />
+
+      <div class="form-group">
+        <label for="notes" class="col-sm-2 control-label">Notlar</label>
+        <div class="col-sm-10">
+          <textarea id="notes" name="notes" rows="3" th:field="*{notes}" class="form-control"
+            placeholder="Medicine, vaccine or any information..."></textarea>
+        </div>
+      </div>
+    
+
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
@@ -36,3 +55,4 @@
 </body>
 
 </html>
+
