@@ -219,13 +219,12 @@ class ClinicServiceTests {
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();
 		visit.setDescription("test");
+		visit.setDate(LocalDate.now());
+		pet7.addVisit(visit);
 
-		owner6.addVisit(pet7.getId(), visit);
 		this.owners.save(owner6);
 
-		assertThat(pet7.getVisits()) //
-			.hasSize(found + 1) //
-			.allMatch(value -> value.getId() != null);
+		assertThat(pet7.getVisits()).hasSize(found + 1).allMatch(value -> value.getId() != null);
 	}
 
 	@Test
