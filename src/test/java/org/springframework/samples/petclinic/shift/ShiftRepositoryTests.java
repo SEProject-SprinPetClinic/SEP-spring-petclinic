@@ -15,7 +15,7 @@ import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
-@Sql({ "/schema.sql", "/data.sql" })
+@Sql({ "/db/h2/schema.sql", "/db/h2/data.sql" })
 class ShiftRepositoryTests {
 
 	@Autowired
