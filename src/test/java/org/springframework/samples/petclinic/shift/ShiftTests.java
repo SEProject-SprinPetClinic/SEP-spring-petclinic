@@ -10,23 +10,24 @@ import org.springframework.samples.petclinic.vet.Vet;
 
 class ShiftTests {
 
-    @Test
-    void shouldHaveCorrectProperties() {
-        Shift shift = new Shift();
-        LocalDate date = LocalDate.now();
-        LocalTime startTime = LocalTime.of(9, 0);
-        LocalTime endTime = LocalTime.of(17, 0);
-        Vet vet = new Vet();
-        vet.setId(1);
+	@Test
+	void shouldHaveCorrectProperties() {
+		Shift shift = new Shift();
+		LocalDate date = LocalDate.now();
+		LocalTime startTime = LocalTime.of(9, 0);
+		LocalTime endTime = LocalTime.of(17, 0);
+		Vet vet = new Vet();
+		vet.setId(1);
 
-        shift.setDate(date);
-        shift.setStartTime(startTime);
-        shift.setEndTime(endTime);
-        shift.setVet(vet);
+		shift.setDate(date);
+		shift.setStartTime(startTime);
+		shift.setEndTime(endTime);
+		shift.setVet(vet);
 
-        assertThat(shift.getDate()).isEqualTo(date);
-        assertThat(shift.getStartTime()).isEqualTo(startTime);
-        assertThat(shift.getEndTime()).isEqualTo(endTime);
-        assertThat(shift.getVet()).isEqualTo(vet);
-    }
-} 
+		assertThat(shift.getDate()).isEqualTo(date);
+		assertThat(shift.getStartTime()).isEqualTo(startTime);
+		assertThat(shift.getEndTime()).isEqualTo(endTime);
+		assertThat(shift.getVet()).isEqualTo(vet);
+	}
+
+}
