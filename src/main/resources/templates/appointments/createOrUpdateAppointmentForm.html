@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Book or Update Appointment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/resources/css/modern-appointments.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="modern-card">
+        <h2 th:text="${#strings.isEmpty(appointment.id) ? 'Book New Appointment' : 'Update Appointment'}"></h2>
+        <p style="margin-bottom: 1.5em; color: #555;">Fill out the form below to schedule a visit for your pet.</p>
+        <form th:action="@{/appointments/new}" method="post" class="modern-form" autocomplete="off">
+            <label for="petId">Pet</label>
+            <select name="petId" id="petId" required>
+                <option th:each="pet : ${pets}" th:value="${pet.id}" th:text="${pet.name}"></option>
+            </select>
+            <label for="vetId">Veterinarian</label>
+            <select name="vetId" id="vetId" required>
+                <option th:each="vet : ${vets}" th:value="${vet.id}" th:text="${vet.firstName + ' ' + vet.lastName}"></option>
+            </select>
+            <label for="dateTime">Date & Time</label>
+            <input type="datetime-local" name="dateTime" id="dateTime" required />
+            <label for="type">Type (e.g. Checkup, Vaccination)</label>
+            <input type="text" name="type" id="type" placeholder="Checkup, Vaccination, etc." required />
+            <button type="submit">Book</button>
+            <a th:href="@{/appointments}" class="back-link">Back to Appointments</a>
+            <div th:if="${error}" style="color:red; margin-top:1em;">
+                <p th:text="${error}"></p>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html> 
