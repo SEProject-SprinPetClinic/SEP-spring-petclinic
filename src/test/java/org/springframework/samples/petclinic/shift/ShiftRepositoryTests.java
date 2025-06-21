@@ -15,7 +15,7 @@ import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
-@Sql({"/schema.sql", "/data.sql"})
+@Sql({ "/schema.sql", "/data.sql" })
 class ShiftRepositoryTests {
 
 	@Autowired
@@ -25,6 +25,7 @@ class ShiftRepositoryTests {
 	private VetRepository vets;
 
 	private Shift testShift;
+
 	private Vet testVet;
 
 	@BeforeEach
@@ -74,4 +75,5 @@ class ShiftRepositoryTests {
 		boolean hasOverlap = shifts.hasOverlappingShifts(testVet, differentDate, startTime, endTime, null);
 		assertThat(hasOverlap).isFalse();
 	}
+
 }
