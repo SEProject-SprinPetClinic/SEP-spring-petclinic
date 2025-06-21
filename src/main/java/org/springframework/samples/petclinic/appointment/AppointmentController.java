@@ -47,10 +47,11 @@ public class AppointmentController {
 			@RequestParam String type, Model model) {
 		try {
 			appointmentService.bookAppointment(petId, vetId, dateTime, type);
-			return "redirect:/appointments";
+			return "redirect:/appointments/confirmation";
 		}
 		catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
+			model.addAttribute("appointment", new Appointment());
 			model.addAttribute("pets", petRepository.findAll());
 			model.addAttribute("vets", vetRepository.findAll());
 			return "appointments/createOrUpdateAppointmentForm";
@@ -93,6 +94,12 @@ public class AppointmentController {
 	public String listAllAppointments(Model model) {
 		model.addAttribute("appointments", appointmentService.getAllAppointments());
 		return "appointments/allAppointments";
+	}
+
+	// Show confirmation page after successful booking
+	@GetMapping("/confirmation")
+	public String showConfirmation() {
+		return "appointments/confirmation";
 	}
 
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Appointment Booked</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="modern-card confirmation-card">
+        <img src="/resources/images/pets.png" alt="Success" style="width:64px;margin-bottom:1em;" />
+        <h2 style="color:#27ae60;">Appointment Booked!</h2>
+        <p style="font-size:1.15em;">Your appointment has been <b>successfully scheduled</b>.<br>We look forward to seeing you!</p>
+        <div class="confirmation-actions">
+            <a th:href="@{/}" class="btn btn-primary">Return Home</a>
+        </div>
+    </div>
+</div>
+</body>
+</html> 
