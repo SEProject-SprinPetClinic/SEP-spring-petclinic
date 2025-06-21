@@ -40,7 +40,9 @@ class ShiftControllerTests {
 	private VetRepository vets;
 
 	private Shift testShift;
+
 	private List<Shift> testShifts;
+
 	private Vet testVet;
 
 	@BeforeEach
@@ -98,12 +100,13 @@ class ShiftControllerTests {
 
 	@Test
 	void testProcessUpdateFormSuccess() throws Exception {
-		mockMvc.perform(post("/shifts/1/edit")
-				.param("date", LocalDate.now().toString())
+		mockMvc
+			.perform(post("/shifts/1/edit").param("date", LocalDate.now().toString())
 				.param("startTime", "09:00")
 				.param("endTime", "17:00")
 				.param("vet.id", "1"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(redirectedUrl("/shifts"));
 	}
+
 }
