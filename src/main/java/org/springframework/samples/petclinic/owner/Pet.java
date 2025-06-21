@@ -57,21 +57,21 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "pet_id")
 	@OrderBy("date ASC")
 	private final Set<Visit> visits = new LinkedHashSet<>();
-	
-    @ManyToOne
+
+	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
 	public Owner getOwner() {
-    	return this.owner;
+		return this.owner;
 	}
 
 	public void setOwner(Owner owner) {
-    	this.owner = owner;
+		this.owner = owner;
 	}
 
 	@Column(name = "notes")
-    private String notes;
+	private String notes;
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -96,11 +96,13 @@ public class Pet extends NamedEntity {
 	public void addVisit(Visit visit) {
 		getVisits().add(visit);
 	}
-    public String getNotes() {
-    return notes;
-    }
 
-    public void setNotes(String notes) {
-    this.notes = notes;
-    }
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
 }
