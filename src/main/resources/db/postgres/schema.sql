@@ -50,3 +50,14 @@ CREATE TABLE IF NOT EXISTS visits (
   description TEXT
 );
 CREATE INDEX ON visits (pet_id);
+
+CREATE TABLE IF NOT EXISTS shifts (
+  id SERIAL PRIMARY KEY,
+  vet_id INTEGER NOT NULL,
+  shift_date DATE NOT NULL,
+  start_time TIME NOT NULL,
+  end_time TIME NOT NULL,
+  FOREIGN KEY (vet_id) REFERENCES vets(id)
+);
+CREATE INDEX IF NOT EXISTS shifts_vet_id ON shifts (vet_id);
+CREATE INDEX IF NOT EXISTS shifts_date ON shifts (shift_date);

@@ -5,6 +5,7 @@ DROP TABLE visits IF EXISTS;
 DROP TABLE pets IF EXISTS;
 DROP TABLE types IF EXISTS;
 DROP TABLE owners IF EXISTS;
+DROP TABLE shifts IF EXISTS;
 
 
 CREATE TABLE vets (
@@ -36,7 +37,7 @@ CREATE INDEX types_name ON types (name);
 CREATE TABLE owners (
   id         INTEGER IDENTITY PRIMARY KEY,
   first_name VARCHAR(30),
-  last_name  VARCHAR_IGNORECASE(30),
+  last_name  VARCHAR(30),
   address    VARCHAR(255),
   city       VARCHAR(80),
   telephone  VARCHAR(20)
@@ -62,3 +63,14 @@ CREATE TABLE visits (
 );
 ALTER TABLE visits ADD CONSTRAINT fk_visits_pets FOREIGN KEY (pet_id) REFERENCES pets (id);
 CREATE INDEX visits_pet_id ON visits (pet_id);
+
+CREATE TABLE shifts (
+  id         INTEGER IDENTITY PRIMARY KEY,
+  vet_id     INTEGER NOT NULL,
+  shift_date DATE NOT NULL,
+  start_time TIME NOT NULL,
+  end_time   TIME NOT NULL
+);
+ALTER TABLE shifts ADD CONSTRAINT fk_shifts_vets FOREIGN KEY (vet_id) REFERENCES vets (id);
+CREATE INDEX shifts_vet_id ON shifts (vet_id);
+CREATE INDEX shifts_date ON shifts (shift_date);

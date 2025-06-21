@@ -61,9 +61,14 @@
             <span>Veterinarians</span>
           </li>
 
+          <li th:replace="~{::menuItem ('/shifts','shifts','manage shifts','calendar','Shifts')}">
+            <span class="fa fa-calendar" aria-hidden="true"></span>
+            <span>Shifts</span>
+          </li>
+
           <li
             th:replace="~{::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','exclamation-triangle','Error')}">
-            <span class="fa exclamation-triangle" aria-hidden="true"></span>
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
             <span>Error</span>
           </li>
 
