@@ -24,7 +24,21 @@
     <td th:text="${owner.address}"/>
     <td th:text="${owner.city}"/>
     <td th:text="${owner.telephone}"/>
-    <td><span th:text="${#strings.listJoin(owner.pets, ', ')}"/></td>
+    <!-- newly added from nefise-->
+     <td>
+  <ul>
+    <li th:each="pet : ${owner.pets}">
+      <div>
+        <span><b>Name:</b> <span th:text="${pet.name}"></span></span><br/>
+        <span><b>Type:</b> <span th:text="${pet.type.name}"></span></span><br/>
+        <span><b>Age:</b> <span th:text="${pet.age}"></span> years</span><br/>
+        <span><b>Age Group:</b> <span th:text="${pet.ageGroup}"></span></span>
+      </div>
+    </li>
+  </ul>
+</td>
+    <!-- end of newly added from nefise-->
+    
   </tr>
   </tbody>
 </table>

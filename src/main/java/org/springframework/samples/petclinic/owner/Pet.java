@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -105,5 +106,37 @@ public class Pet extends NamedEntity {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+
+	//Add age and age group calculation for pets (from Nefise)
+
+	public int getAge() {
+    if (this.birthDate == null) return -1;
+    return Period.between(this.birthDate, LocalDate.now()).getYears();
+}
+
+public String getAgeGroup() {
+    int age = this.getAge();
+    if (age < 0 || this.getType() == null || this.getType().getName() == null) {
+        return "Unknown";
+    }
+
+    String species = this.getType().getName().toLowerCase();
+
+    switch (species) {
+        case "dog":
+            if (age <= 1) return "Young";
+            else if (age <= 6) return "Adult";
+            else return "Senior";
+        case "cat":
+            if (age <= 2) return "Young";
+            else if (age <= 7) return "Adult";
+            else return "Senior";
+        default: // for other species
+            if (age <= 3) return "Young";
+            else if (age <= 7) return "Adult";
+            else return "Senior";
+    }
+}
+
 
 }
