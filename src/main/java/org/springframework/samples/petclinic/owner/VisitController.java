@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Juergen Hoeller
@@ -43,6 +45,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Controller
 public class VisitController {
+
+	private static final Logger logger = LoggerFactory.getLogger(VisitController.class);
 
 	private final OwnerRepository owners;
 
@@ -117,9 +121,10 @@ public class VisitController {
 						+ visit.getDate() + " at " + visit.getTime() + ".";
 				try {
 					smsService.sendSMS(phone, msg);
+					logger.info("SMS başarıyla gönderildi: {} - {}", phone, msg);
 				}
 				catch (Exception e) {
-					// Hata loglanabilir veya kullanıcıya gösterilebilir
+					logger.error("SMS gönderimi sırasında hata oluştu", e);
 				}
 			}
 		}
