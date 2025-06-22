@@ -47,10 +47,10 @@ INSERT INTO pets VALUES (default, 'Freddy', '2010-03-09', 5, 9, null);
 INSERT INTO pets VALUES (default, 'Lucky', '2010-06-24', 2, 10, null);
 INSERT INTO pets VALUES (default, 'Sly', '2012-06-08', 1, 10, null);
 
-INSERT INTO visits VALUES (default, 7, '2013-01-01', 'rabies shot');
-INSERT INTO visits VALUES (default, 8, '2013-01-02', 'rabies shot');
-INSERT INTO visits VALUES (default, 8, '2013-01-03', 'neutered');
-INSERT INTO visits VALUES (default, 7, '2013-01-04', 'spayed');
+INSERT INTO visits VALUES (default, 7, '2013-01-01', NULL,'rabies shot');
+INSERT INTO visits VALUES (default, 8, '2013-01-02', null,'rabies shot');
+INSERT INTO visits VALUES (default, 8, '2013-01-03', null,'neutered');
+INSERT INTO visits VALUES (default, 7, '2013-01-04', null,'spayed');
 
 -- Sample shifts for vets
 INSERT INTO shifts VALUES (default, 1, '2024-03-18', '09:00', '17:00');

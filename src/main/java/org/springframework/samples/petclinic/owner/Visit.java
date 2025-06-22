@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
@@ -41,6 +42,10 @@ public class Visit extends BaseEntity {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
+	@Column(name = "visit_time")
+	@DateTimeFormat(pattern = "HH:mm")
+	private LocalTime time;
+
 	@NotBlank
 	private String description;
 
@@ -63,6 +68,14 @@ public class Visit extends BaseEntity {
 		this.date = date;
 	}
 
+	public LocalTime getTime() {
+		return this.time;
+	}
+
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
+
 	public String getDescription() {
 		return this.description;
 	}
@@ -77,6 +90,18 @@ public class Visit extends BaseEntity {
 
 	public void setPet(Pet pet) {
 		this.pet = pet;
+	}
+
+	// bugünün tarihi ile karşılaştırılıyor.
+	public boolean isFutureAppointment() {
+		LocalDate today = LocalDate.now();
+		if (this.date != null && this.date.isAfter(today)) {
+			return true;
+		}
+		if (this.date != null && this.date.isEqual(today) && this.time != null) {
+			return this.time.isAfter(LocalTime.now());
+		}
+		return false;
 	}
 
 }

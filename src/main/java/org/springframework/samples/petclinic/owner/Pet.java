@@ -107,36 +107,45 @@ public class Pet extends NamedEntity {
 		this.notes = notes;
 	}
 
-	//Add age and age group calculation for pets (from Nefise)
+	// Add age and age group calculation for pets (from Nefise)
 
 	public int getAge() {
-    if (this.birthDate == null) return -1;
-    return Period.between(this.birthDate, LocalDate.now()).getYears();
-}
+		if (this.birthDate == null)
+			return -1;
+		return Period.between(this.birthDate, LocalDate.now()).getYears();
+	}
 
-public String getAgeGroup() {
-    int age = this.getAge();
-    if (age < 0 || this.getType() == null || this.getType().getName() == null) {
-        return "Unknown";
-    }
+	public String getAgeGroup() {
+		int age = this.getAge();
+		if (age < 0 || this.getType() == null || this.getType().getName() == null) {
+			return "Unknown";
+		}
 
-    String species = this.getType().getName().toLowerCase();
+		String species = this.getType().getName().toLowerCase();
 
-    switch (species) {
-        case "dog":
-            if (age <= 1) return "Young";
-            else if (age <= 6) return "Adult";
-            else return "Senior";
-        case "cat":
-            if (age <= 2) return "Young";
-            else if (age <= 7) return "Adult";
-            else return "Senior";
-        default: // for other species
-            if (age <= 3) return "Young";
-            else if (age <= 7) return "Adult";
-            else return "Senior";
-    }
-}
-
+		switch (species) {
+			case "dog":
+				if (age <= 1)
+					return "Young";
+				else if (age <= 6)
+					return "Adult";
+				else
+					return "Senior";
+			case "cat":
+				if (age <= 2)
+					return "Young";
+				else if (age <= 7)
+					return "Adult";
+				else
+					return "Senior";
+			default: // for other species
+				if (age <= 3)
+					return "Young";
+				else if (age <= 7)
+					return "Adult";
+				else
+					return "Senior";
+		}
+	}
 
 }

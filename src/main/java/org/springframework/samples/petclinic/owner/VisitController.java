@@ -26,9 +26,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Juergen Hoeller
@@ -39,9 +42,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Wick Dynex
  */
 @Controller
-class VisitController {
+public class VisitController {
 
 	private final OwnerRepository owners;
+
+	@Autowired
+	private NotificationService notificationService;
+
+	@Autowired
+	private SMSService smsService;
 
 	public VisitController(OwnerRepository owners) {
 		this.owners = owners;
@@ -93,8 +102,45 @@ class VisitController {
 
 		owner.addVisit(petId, visit);
 		this.owners.save(owner);
-		redirectAttributes.addFlashAttribute("message", "Your visit has been booked");
+
+		// SMS gönderimi: Eğer randevu tam 24 saat sonraysa (saat bazında,
+		// dakika/saniye/milisaniye önemsiz)
+		if (visit.getDate() != null && visit.getTime() != null) {
+			java.time.LocalDateTime now = java.time.LocalDateTime.now();
+			java.time.LocalDateTime visitDateTime = java.time.LocalDateTime.of(visit.getDate(), visit.getTime());
+			java.time.Duration duration = java.time.Duration.between(now, visitDateTime);
+			if (duration.toHours() == 24) {
+				String ownerName = owner.getFirstName() + " " + owner.getLastName();
+				String petName = visit.getPet() != null ? visit.getPet().getName() : "";
+				String phone = owner.getTelephone();
+				String msg = "Dear " + ownerName + ", you have an appointment for your pet " + petName + " on "
+						+ visit.getDate() + " at " + visit.getTime() + ".";
+				try {
+					smsService.sendSMS(phone, msg);
+				}
+				catch (Exception e) {
+					// Hata loglanabilir veya kullanıcıya gösterilebilir
+				}
+			}
+		}
+
+		if (visit.isFutureAppointment()) {
+			redirectAttributes.addFlashAttribute("message",
+					(visit.getPet() != null ? visit.getPet().getName() : "") + " appointment has been booked for "
+							+ visit.getDate().toString() + " "
+							+ (visit.getTime() != null ? visit.getTime().toString() : "") + ".");
+		}
+		else {
+			redirectAttributes.addFlashAttribute("message", "Visit has been booked");
+		}
 		return "redirect:/owners/{ownerId}";
+	}
+
+	@GetMapping("/test-notification")
+	@ResponseBody
+	public String testNotification() {
+		notificationService.sendUpcomingVisitNotifications();
+		return "Notification test triggered!";
 	}
 
 }
