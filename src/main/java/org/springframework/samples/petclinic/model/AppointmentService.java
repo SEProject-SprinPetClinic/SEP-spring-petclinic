@@ -51,6 +51,7 @@ public class AppointmentService {
 			throw new IllegalStateException("Appointment slot not available");
 		}
 		appointment.setDateTime(newDateTime);
+		appointment.setStatus("RESCHEDULED");
 		appointmentRepository.save(appointment);
 	}
 

@@ -5,41 +5,59 @@
 <head>
     <title>All Appointments</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>All Appointments</h2>
-    <a th:href="@{/appointments/new}">Book New Appointment</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Pet</th>
-                <th>Veterinarian</th>
-                <th>Date & Time</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="appointment : ${appointments}">
-                <td th:text="${appointment.pet.name}"></td>
-                <td th:text="${appointment.vet.firstName + ' ' + appointment.vet.lastName}"></td>
-                <td th:text="${#temporals.format(appointment.dateTime, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${appointment.type}"></td>
-                <td th:text="${appointment.status}"></td>
-                <td>
-                    <form th:action="@{'/appointments/cancel/' + ${appointment.id}}" method="post" style="display:inline;">
-                        <button type="submit">Cancel</button>
-                    </form>
-                    <form th:action="@{'/appointments/reschedule/' + ${appointment.id}}" method="post" style="display:inline;">
-                        <input type="datetime-local" name="newDateTime" required placeholder="New date & time" />
-                        <button type="submit">Reschedule</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="all-appointments-container" style="background: #fff;">
+        <h2 class="all-appointments-title">All Appointments</h2>
+        <a th:href="@{/appointments/new}" class="book-appointment-btn">Book New Appointment</a>
+        <div style="margin-top: 32px;">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Pet</th>
+                        <th>Veterinarian</th>
+                        <th>Date & Time</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.pet.name}"></td>
+                        <td th:text="${appointment.vet.firstName + ' ' + appointment.vet.lastName}"></td>
+                        <td th:text="${#temporals.format(appointment.dateTime, 'MMM dd, yyyy HH:mm')}"></td>
+                        <td th:text="${appointment.type}"></td>
+                        <td>
+                            <span th:switch="${appointment.status}">
+                                <span th:case="'SCHEDULED'" class="status-scheduled">Scheduled</span>
+                                <span th:case="'RESCHEDULED'" class="status-rescheduled">Rescheduled</span>
+                                <span th:case="'CANCELLED'" class="status-cancelled">Cancelled</span>
+                                <span th:case="*" class="status-other" th:text="${appointment.status}"></span>
+                            </span>
+                        </td>
+                        <td style="min-width: 270px;">
+                            <form th:action="@{'/appointments/cancel/' + ${appointment.id}}" method="post" style="display:inline-block;">
+                                <button type="submit" class="cancel-btn">Cancel</button>
+                            </form>
+                            <form th:action="@{'/appointments/reschedule/' + ${appointment.id}}" method="post" style="display:inline-block;">
+                                <input type="datetime-local" name="newDateTime" class="date-time-input" required placeholder="New date & time" />
+                                <button type="submit" class="reschedule-btn">Reschedule</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html> 
