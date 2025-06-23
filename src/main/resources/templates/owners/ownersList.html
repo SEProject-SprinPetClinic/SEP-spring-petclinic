@@ -28,13 +28,31 @@
      <td>
   <ul>
     <li th:each="pet : ${owner.pets}">
-      <div>
-        <span><b>Name:</b> <span th:text="${pet.name}"></span></span><br/>
-        <span><b>Type:</b> <span th:text="${pet.type.name}"></span></span><br/>
-        <span><b>Age:</b> <span th:text="${pet.age}"></span> years</span><br/>
-        <span><b>Age Group:</b> <span th:text="${pet.ageGroup}"></span></span>
-      </div>
-    </li>
+  <div>
+    <span>
+  <b>Name:</b> 
+  <span th:text="${pet.name}"></span>
+
+  <!-- New badge -->
+  <span th:if="${petBadges[pet.id] == 'New'}"
+        th:text="${petBadges[pet.id]}" 
+        style="background-color: #03A9F4; color: white; font-weight: bold; padding: 3px 6px; border-radius: 6px; margin-left: 5px;">
+  </span>
+
+  <!-- Frequent Visitor badge -->
+  <span th:if="${petBadges[pet.id] == 'Frequent Visitor'}"
+        th:text="${petBadges[pet.id]}" 
+        style="background-color: #4CAF50; color: white; font-weight: bold; padding: 3px 6px; border-radius: 6px; margin-left: 5px;">
+  </span>
+
+</span><br/>
+    
+    <span><b>Type:</b> <span th:text="${pet.type.name}"></span></span><br/>
+    <span><b>Age:</b> <span th:text="${pet.age}"></span> years</span><br/>
+    <span><b>Age Group:</b> <span th:text="${pet.ageGroup}"></span></span>
+  </div>
+</li>
+
   </ul>
 </td>
     <!-- end of newly added from nefise-->

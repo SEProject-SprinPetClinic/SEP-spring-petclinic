@@ -15,8 +15,10 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,8 +52,11 @@ class OwnerController {
 
 	private final OwnerRepository owners;
 
-	public OwnerController(OwnerRepository owners) {
+	private final PetService petService;
+
+	public OwnerController(OwnerRepository owners, PetService petService) {
 		this.owners = owners;
+		this.petService = petService;
 	}
 
 	@InitBinder
@@ -117,10 +122,24 @@ class OwnerController {
 
 	private String addPaginationModel(int page, Model model, Page<Owner> paginated) {
 		List<Owner> listOwners = paginated.getContent();
+
+		// new added part badge map
+		Map<Integer, String> petBadges = new HashMap<>();
+
+		for (Owner owner : listOwners) {
+			for (Pet pet : owner.getPets()) {
+				int petId = pet.getId();
+				String badge = petService.getBadgeForPet(petId);
+				petBadges.put(petId, badge);
+			}
+		}
+
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", paginated.getTotalPages());
 		model.addAttribute("totalItems", paginated.getTotalElements());
 		model.addAttribute("listOwners", listOwners);
+		model.addAttribute("petBadges", petBadges); // Badge map added
+
 		return "owners/ownersList";
 	}
 

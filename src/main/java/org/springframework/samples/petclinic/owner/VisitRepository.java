@@ -8,4 +8,6 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
 
 	List<Visit> findByDate(LocalDate date);
 
+	int countByPetId(int petId);
+
 }
