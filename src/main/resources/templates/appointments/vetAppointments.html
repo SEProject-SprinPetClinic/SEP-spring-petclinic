@@ -23,7 +23,14 @@
                 <td th:text="${appointment.pet.name}"></td>
                 <td th:text="${#temporals.format(appointment.dateTime, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${appointment.type}"></td>
-                <td th:text="${appointment.status}"></td>
+                <td>
+                    <span th:switch="${appointment.status}">
+                        <span th:case="'SCHEDULED'" class="status-scheduled">Scheduled</span>
+                        <span th:case="'RESCHEDULED'" class="status-rescheduled">Rescheduled</span>
+                        <span th:case="'CANCELLED'" class="status-cancelled">Cancelled</span>
+                        <span th:case="*" class="status-other" th:text="${appointment.status}"></span>
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>
