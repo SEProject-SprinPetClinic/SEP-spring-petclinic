@@ -8,40 +8,46 @@
     <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}" />
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="card shadow p-4" style="max-width: 500px; margin: 2em auto; border-radius: 1.25rem;">
-        <h2 class="mb-3 text-center" th:text="${#strings.isEmpty(appointment.id) ? 'Book New Appointment' : 'Update Appointment'}"></h2>
-        <p class="mb-4 text-muted text-center">Fill out the form below to schedule a visit for your pet.</p>
-        <form th:action="@{/appointments/new}" method="post" autocomplete="off">
-            <div class="mb-3">
-                <label for="petId" class="form-label">Pet</label>
-                <select name="petId" id="petId" class="form-select" required>
-                    <option th:each="pet : ${pets}" th:value="${pet.id}" th:text="${pet.name}"></option>
-                </select>
+    <header>
+        <!-- MENU: links to Owners, Vets, Shifts, etc. -->
+    </header>
+    <main>
+        <div layout:fragment="content">
+            <div class="card shadow p-4" style="max-width: 500px; margin: 2em auto; border-radius: 1.25rem;">
+                <h2 class="mb-3 text-center" th:text="${#strings.isEmpty(appointment.id) ? 'Book New Appointment' : 'Update Appointment'}"></h2>
+                <p class="mb-4 text-muted text-center">Fill out the form below to schedule a visit for your pet.</p>
+                <form th:action="@{/appointments/new}" method="post" autocomplete="off">
+                    <div class="mb-3">
+                        <label for="petId" class="form-label">Pet</label>
+                        <select name="petId" id="petId" class="form-select" required>
+                            <option th:each="pet : ${pets}" th:value="${pet.id}" th:text="${pet.name}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vetId" class="form-label">Veterinarian</label>
+                        <select name="vetId" id="vetId" class="form-select" required>
+                            <option th:each="vet : ${vets}" th:value="${vet.id}" th:text="${vet.firstName + ' ' + vet.lastName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateTime" class="form-label">Date & Time</label>
+                        <input type="datetime-local" name="dateTime" id="dateTime" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type (e.g. Checkup, Vaccination)</label>
+                        <input type="text" name="type" id="type" class="form-control" placeholder="Checkup, Vaccination, etc." required />
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center mt-4 w-100" style="gap: 12px;">
+                        <button type="submit" class="btn btn-primary flex-fill" style="min-width: 0; font-size: 0.9rem;">Book</button>
+                        <a th:href="@{/}" class="btn btn-primary flex-fill" style="min-width: 0; font-size: 0.9rem;">Return to Home Page</a>
+                        <a th:href="@{/appointments}" class="btn btn-primary flex-fill" style="min-width: 0; font-size: 0.9rem;">Back to Appointments</a>
+                    </div>
+                    <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+                        <p th:text="${error}" class="mb-0"></p>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="vetId" class="form-label">Veterinarian</label>
-                <select name="vetId" id="vetId" class="form-select" required>
-                    <option th:each="vet : ${vets}" th:value="${vet.id}" th:text="${vet.firstName + ' ' + vet.lastName}"></option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="dateTime" class="form-label">Date & Time</label>
-                <input type="datetime-local" name="dateTime" id="dateTime" class="form-control" required />
-            </div>
-            <div class="mb-3">
-                <label for="type" class="form-label">Type (e.g. Checkup, Vaccination)</label>
-                <input type="text" name="type" id="type" class="form-control" placeholder="Checkup, Vaccination, etc." required />
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <button type="submit" class="btn btn-primary px-4">Book</button>
-                <a th:href="@{/appointments}" class="btn btn-link">Back to Appointments</a>
-            </div>
-            <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
-                <p th:text="${error}" class="mb-0"></p>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </main>
 </body>
 </html> 
